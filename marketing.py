@@ -1,0 +1,52 @@
+from collections import deque
+
+# Finding if a graph is Bipartite or not
+#compete =["1","2","3","0","5","6","4"] 
+compete =["","","","","","",""] 
+#compete = ["1 4","2","3","0",""]
+#compete = [ "1", "2" ,"0" ]	
+#compete = ["1","2","3","0","0 5","1"]
+
+
+competeList = [ [ int(element) for element in a.split(" ") ] if a is not "" else []  for a in compete  ]
+#print competeList
+
+colorList = [-1]*len(competeList)
+
+AdMatrix = [ [0]*len(competeList) for index,value in enumerate(competeList) ]
+for row,elements in enumerate(competeList) :
+	for col in elements:
+		AdMatrix[ row ][col ] = 1
+		AdMatrix[ col ][ row ] = 1
+
+def DFS( child , color ):
+#	print child
+	if colorList[ child ] == -1 :
+		colorList[ child ] = color
+	elif colorList[ child ] == color:
+		return True
+	else:
+		return False
+		
+	if color :
+		color = 0
+	else :
+		color = 1
+	children = [ index for index,conn in enumerate( AdMatrix[ child ] ) if conn > 0  and colorList[ index ] == -1 ]
+	if sum([ 0 if result is True else 1 for result in map( lambda x : DFS( x, color ) ,  children ) ]) == 0:
+		return True
+	else:
+		return False
+
+results = -1 
+try : 
+	while 1:
+		seed = colorList.index(-1)
+		if DFS(seed,0) :
+			results += 1
+		else:
+			print "False"
+			break
+
+except ValueError:
+	print "Marketing Possibilities: ",2<<results 
