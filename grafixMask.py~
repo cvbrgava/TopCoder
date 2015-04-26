@@ -137,10 +137,23 @@ for point in IntPoints:
 		paths.append(RecursiveConnect(RectList, point, IntPoints , [] ) )
 		paths[-1].append( paths[ -1 ][ 0 ] )
 print paths
+#fig = plt.figure()
+#ax = fig.add_subplot(1,1,1)
+#for path in paths:
+#	ax.plot(  [ x[ 0] for x in path], [ x[1] for x in path] )
+#ax.scatter(  [ x[ 0] for x in IntPoints], [ x[1] for x in IntPoints] )
+#plt.show()
+
+
 fig = plt.figure()
 ax = fig.add_subplot(1,1,1)
-for path in paths:
-	ax.plot(  [ x[ 0] for x in path], [ x[1] for x in path] )
-ax.scatter(  [ x[ 0] for x in IntPoints], [ x[1] for x in IntPoints] )
+markerline, stemlines, baseline = plt.stem(  range( 20 ), [2,4,4,2,2,4,4,2,2,4,4,2,2,4,4,2,2,4,4,2 ],'-.' )
+ax.plot(  range( 20 ), [2,4,4,2,2,4,4,2,2,4,4,2,2,4,4,2,2,4,4,2 ] )
+plt.setp( markerline,'markerfacecolor','k' )
+ax.set_xlabel('Samples')
+ax.set_ylabel('Active Cores')
+plt.setp( stemlines,'markerfacecolor','k' )
+ax.set_xlim( (-1,20) )
+ax.set_ylim( (0,5) )
+#ax.scatter(  [ x[ 0] for x in IntPoints], [ x[1] for x in IntPoints] )
 plt.show()
-
